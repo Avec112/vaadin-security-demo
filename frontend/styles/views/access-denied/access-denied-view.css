@@ -1,0 +1,12 @@
+#access-denied {
+    border: 5px solid crimson;
+    background-color: whitesmoke;
+    margin: 5em;
+    color: crimson;
+    padding: 1em;
+    width: fit-content;
+}
+
+#access-denied h3 {
+    color: crimson;
+}

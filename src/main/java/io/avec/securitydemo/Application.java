@@ -1,4 +1,4 @@
-package io.avec.roledemo;
+package io.avec.securitydemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

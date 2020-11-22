@@ -9,6 +9,11 @@
   overflow: hidden;
   background-color: var(--lumo-contrast);
 }
+
+#header label {
+  margin-right: var(--lumo-space-m);
+}
+
 #header h1 {
   font-size: var(--lumo-font-size-l);
   margin: 0;

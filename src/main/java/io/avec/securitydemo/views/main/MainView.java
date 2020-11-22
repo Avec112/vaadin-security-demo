@@ -1,4 +1,4 @@
-package io.avec.roledemo.views.main;
+package io.avec.securitydemo.views.main;
 
 import java.util.Optional;
 
@@ -8,8 +8,10 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -20,12 +22,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
-import io.avec.roledemo.views.main.MainView;
-import io.avec.roledemo.views.allroles.AllrolesView;
-import io.avec.roledemo.views.contentdifferencesprrole.ContentdifferencesprRoleView;
-import io.avec.roledemo.views.formdifferencesprrole.FormdifferencesprRoleView;
-import io.avec.roledemo.views.adminroleonly.AdminRoleonlyView;
+import io.avec.securitydemo.views.allroles.AllrolesView;
+import io.avec.securitydemo.views.contentdifferencesprrole.ContentdifferencesprRoleView;
+import io.avec.securitydemo.views.adminroleonly.AdminRoleonlyView;
 import com.vaadin.flow.theme.lumo.Lumo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -36,10 +38,13 @@ import com.vaadin.flow.theme.lumo.Lumo;
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class MainView extends AppLayout {
 
+    HttpServletRequest request;
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainView() {
+    public MainView(HttpServletRequest request) {
+        this.request = request;
+
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -56,7 +61,13 @@ public class MainView extends AppLayout {
         layout.add(new DrawerToggle());
         viewTitle = new H1();
         layout.add(viewTitle);
-        layout.add(new Image("images/user.svg", "Avatar"));
+        final Anchor logOut = new Anchor("/logout", "Log out");
+        logOut.getStyle().set("padding-right", "10px");
+        layout.add(
+                new Image("images/user.svg", "Avatar"),
+                new Label(request.getRemoteUser() == null ? "Anonymous" : request.getRemoteUser()),
+                logOut
+        );
         return layout;
     }
 
@@ -87,10 +98,9 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[] {
-            createTab("All roles", AllrolesView.class),
-            createTab("Content differences pr. Role", ContentdifferencesprRoleView.class),
-            createTab("Form differences pr. Role", FormdifferencesprRoleView.class),
-            createTab("Admin Role only", AdminRoleonlyView.class)
+            createTab("All", AllrolesView.class),
+            createTab("Restricted", ContentdifferencesprRoleView.class),
+            createTab("Admin", AdminRoleonlyView.class)
         };
     }
 
