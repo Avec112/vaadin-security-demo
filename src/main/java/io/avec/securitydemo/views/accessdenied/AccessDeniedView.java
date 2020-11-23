@@ -17,14 +17,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 @SuppressWarnings("unused")
 @Slf4j
-@Route(value = "access-denied", layout = MainView.class)
+@Route(value = "access-denied-view", layout = MainView.class)
 @CssImport("./styles/views/access-denied/access-denied-view.css")
 @PageTitle("Access Denied")
 public class AccessDeniedView extends Div implements HasUrlParameter<String> {
 
     private final SpanMessageFormatter span = new SpanMessageFormatter();
     public AccessDeniedView() {
-        setId("access-denied");
+        setId("access-denied-view");
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.add(new H3("Access Denied"));
         final ParagraphMessageFormatter p = new ParagraphMessageFormatter();

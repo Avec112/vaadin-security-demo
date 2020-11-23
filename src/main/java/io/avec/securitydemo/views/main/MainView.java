@@ -22,9 +22,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
-import io.avec.securitydemo.views.allroles.AllrolesView;
-import io.avec.securitydemo.views.contentdifferencesprrole.ContentdifferencesprRoleView;
-import io.avec.securitydemo.views.adminroleonly.AdminRoleonlyView;
+import io.avec.securitydemo.views.home.HomeView;
+import io.avec.securitydemo.views.restricted.RestrictedView;
+import io.avec.securitydemo.views.admin.AdminView;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,9 +98,9 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[] {
-            createTab("All", AllrolesView.class),
-            createTab("Restricted", ContentdifferencesprRoleView.class),
-            createTab("Admin", AdminRoleonlyView.class)
+            createTab("All", HomeView.class),
+            createTab("Restricted", RestrictedView.class),
+            createTab("Admin", AdminView.class)
         };
     }
 

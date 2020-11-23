@@ -36,7 +36,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
 			// is user authenticated
 			if(SecurityUtils.isUserLoggedIn()) {
 //				event.rerouteToError(NotFoundException.class, "Sorry you do not have access to this resource."); //
-				event.rerouteTo("access-denied", event.getLocation().getPath()); //
+				event.rerouteTo("access-denied-view", event.getLocation().getPath()); //
 			}
 			// user is not authenticated
 			else {
