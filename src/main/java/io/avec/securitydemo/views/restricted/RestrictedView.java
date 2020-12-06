@@ -1,4 +1,4 @@
-package io.avec.securitydemo.views.contentdifferencesprrole;
+package io.avec.securitydemo.views.restricted;
 
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -10,12 +10,12 @@ import org.springframework.security.access.annotation.Secured;
 
 @Route(value = "restricted", layout = MainView.class)
 @PageTitle("Content differences pr. Role")
-@CssImport("./styles/views/contentdifferencesprrole/contentdifferencespr-role-view.css")
+@CssImport("./styles/views/restricted/restricted-view.css")
 @Secured({"ROLE_USER"})
-public class ContentdifferencesprRoleView extends Div {
+public class RestrictedView extends Div {
 
-    public ContentdifferencesprRoleView() {
-        setId("contentdifferencespr-role-view");
+    public RestrictedView() {
+        setId("restricted-view");
         add(new Html("<p>Users with role <b>USER</b> can view this page.</p>"));
         add(new Html("<p>Note that user <b>admin</b> have both role <b>USER</b> and <b>ADMIN</b></p>"));
     }

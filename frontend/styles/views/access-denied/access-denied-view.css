@@ -1,4 +1,4 @@
-#access-denied {
+#access-denied-view {
     border: 5px solid crimson;
     background-color: whitesmoke;
     margin: 5em;
@@ -7,6 +7,6 @@
     width: fit-content;
 }
 
-#access-denied h3 {
+#access-denied-view h3 {
     color: crimson;
 }

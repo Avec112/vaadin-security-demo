@@ -1,4 +1,4 @@
-package io.avec.securitydemo.views.allroles;
+package io.avec.securitydemo.views.home;
 
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -10,13 +10,12 @@ import com.vaadin.flow.router.RouteAlias;
 
 @Route(value = "home", layout = MainView.class)
 @PageTitle("Home")
-@CssImport("./styles/views/allroles/allroles-view.css")
+@CssImport("./styles/views/home/home-view.css")
 @RouteAlias(value = "", layout = MainView.class)
-//@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-public class AllrolesView extends Div {
+public class HomeView extends Div {
 
-    public AllrolesView() {
-        setId("allroles-view");
+    public HomeView() {
+        setId("home-view");
         add(new Html("<p>All authenticated users can view this page.</p>"));
 
     }
