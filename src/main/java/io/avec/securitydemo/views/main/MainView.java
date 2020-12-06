@@ -1,7 +1,5 @@
 package io.avec.securitydemo.views.main;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import com.vaadin.flow.component.Component;
@@ -24,10 +22,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
-import io.avec.securitydemo.security.SecurityUtils;
-import io.avec.securitydemo.views.allroles.AllrolesView;
-import io.avec.securitydemo.views.contentdifferencesprrole.ContentdifferencesprRoleView;
-import io.avec.securitydemo.views.adminroleonly.AdminRoleonlyView;
+import io.avec.securitydemo.views.home.HomeView;
+import io.avec.securitydemo.views.restricted.RestrictedView;
+import io.avec.securitydemo.views.admin.AdminView;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,17 +97,11 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        List<Tab> tabs = new ArrayList<>();
-        tabs.add(createTab("All", AllrolesView.class));
-        tabs.add(createTab("Restricted", ContentdifferencesprRoleView.class));
-        tabs.add(createTab("Admin (link visible for all)", AdminRoleonlyView.class)); // visible
-
-        // demo how to hide menu item
-        if(SecurityUtils.isAccessGranted(AdminRoleonlyView.class)) {
-            tabs.add(createTab("Admin (link visible only for admin)", AdminRoleonlyView.class)); // visible for admin only
-        }
-
-        return tabs.toArray(new Tab[0]);
+        return new Tab[] {
+            createTab("All", HomeView.class),
+            createTab("Restricted", RestrictedView.class),
+            createTab("Admin", AdminView.class)
+        };
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
