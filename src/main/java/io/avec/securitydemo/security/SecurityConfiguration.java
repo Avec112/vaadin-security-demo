@@ -2,18 +2,17 @@ package io.avec.securitydemo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.sql.DataSource;
 
 
 /*
@@ -29,6 +28,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_FAILURE_URL = "/login?error";
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
+
+    private final DataSource dataSource;
+
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    // Authorization
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Not using Spring CSRF here to be able to use plain HTML for the login page
@@ -55,7 +62,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .failureUrl(LOGIN_FAILURE_URL)
 
                 // Configure logout
-                .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+                .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL)
+
+                // remember-me cookie, always-on (no checkbox in Login UI needed). Default timeout 14 days
+                // cookie seems to be removed after server restart. Check again with https, and possibly secureCookie
+                .and().rememberMe()
+                    .alwaysRemember(true)
+        ;
     }
 
 
@@ -70,14 +83,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/icons/**", "/images/**",
                 "/frontend/**",
                 "/webjars/**",
-//                "/h2-console/**",
+                "/h2-console/**",
                 "/frontend-es5/**", "/frontend-es6/**",
                 "/vaadinServlet/**"
         );
 
     }
 
-    @SuppressWarnings("deprecation") // ok for demo purposes
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .withDefaultSchema()
+                .withUser(
+                        User.withUsername("guest")
+                                .password(passwordEncoder().encode("guest"))
+                                .roles("GUEST")
+                )
+                .withUser(
+                        User.withUsername("user")
+                                .password(passwordEncoder().encode("user"))
+                                .roles("USER")
+                )
+                .withUser(
+                        User.withUsername("admin")
+//                                .username("admin")
+                                .password(passwordEncoder().encode("admin"))
+                                .roles("ADMIN")
+                );
+    }
+
+    // Authentication...can be replaced with configure(AuthenticationManagerBuilder auth)
+    /*@SuppressWarnings("deprecation") // ok for demo purposes
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -100,6 +142,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         );
 
         return new InMemoryUserDetailsManager(users);
-    }
+    }*/
 }
 

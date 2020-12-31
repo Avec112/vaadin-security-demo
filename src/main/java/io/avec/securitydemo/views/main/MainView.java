@@ -103,11 +103,11 @@ public class MainView extends AppLayout {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(createTab("All", HomeView.class));
         tabs.add(createTab("Restricted", RestrictedView.class));
-        tabs.add(createTab("Admin (link visible for all)", AdminView.class)); // visible
+        tabs.add(createTab("Admin (link visible for all)", AdminView.class)); // link visible
 
         // demo how to hide menu item
         if(SecurityUtils.isAccessGranted(AdminView.class)) {
-            tabs.add(createTab("Admin (link visible only for admin)", AdminView.class)); // visible for admin only
+            tabs.add(createTab("Admin (link visible only for admin)", AdminView.class)); // link visible for admin only
         }
 
         return tabs.toArray(new Tab[0]);
