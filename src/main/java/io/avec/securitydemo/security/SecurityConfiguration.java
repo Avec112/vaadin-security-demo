@@ -95,27 +95,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    //
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .withDefaultSchema()
-                .withUser(
-                        User.withUsername("guest")
-                                .password(passwordEncoder().encode("guest"))
-                                .roles("GUEST")
-                )
-                .withUser(
-                        User.withUsername("user")
-                                .password(passwordEncoder().encode("user"))
-                                .roles("USER")
-                )
-                .withUser(
-                        User.withUsername("admin")
-//                                .username("admin")
-                                .password(passwordEncoder().encode("admin"))
-                                .roles("ADMIN")
-                );
+                .dataSource(dataSource);
+
     }
 
     // Authentication...can be replaced with configure(AuthenticationManagerBuilder auth)
