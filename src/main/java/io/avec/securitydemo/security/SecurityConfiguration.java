@@ -92,6 +92,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // Bcrypt uses version 2a and 10 rounds default
+        // Note $2a$10 in this example $2a$10$UtLvlT4oChUGYbF1ptFqvOZXskH8t2S/xaZsC2QSISrPIofVY0pZW
+        // If you need to encode passwords create your own or use something like https://www.browserling.com/tools/bcrypt
         return new BCryptPasswordEncoder();
     }
 
