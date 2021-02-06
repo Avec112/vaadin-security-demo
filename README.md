@@ -4,7 +4,7 @@ The application is a simple demonstration of Vaadin integrated with Spring Boot 
 A local in-memory database (H2) is created with tables `users` and `authorities`.
 
 The application is based on two separate examples: 
-* Vaadin Tutorial [Securing your app with Spring Security](https://vaadin.com/learn/tutorials/securing-your-app-with-spring-security) (Tutorial)
+* Vaadin Tutorial [Securing your app with Spring Security](https://vaadin.com/learn/tutorials/securing-your-app-with-spring-security)
 * Java Brains showing [Spring Boot + Spring Security with JPA authentication and MySQL from scratch](https://www.youtube.com/watch?v=TNt3GHuayXs&list=PL7sN6F00MxZbcUxfVSHscl72fH_K2-35l) (Youtube)
 
 ## Interesting files
