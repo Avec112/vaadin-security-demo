@@ -12,7 +12,7 @@ The application is based on two separate examples:
 * data.sql (populating tables)
 * SecurityConfiguration.java (from Vaadin Tutorial)
 * SecurityUtils.java (from Vaadin tutorial)
-* MainView.java (line 108, showing how to hide menu item)
+* MainView.java (line 108, showing menu by authorization)
 * Other Views using annotation @Secured
 
 ## Requirements
